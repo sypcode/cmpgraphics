@@ -71,12 +71,12 @@ class Huepfer {
 		return (int) ((yMax - y) * (height - 1) / (yMax - yMin));// TODO Hier Code einfuegen ...
 	}
 
-	public void render(Graphics g) {
+	public void render() {
 		for (int i = 0; i < num; i++) {
 			if(i%100 == 0){
 				int red   = (i * 3) % 256;
 				int green = (i * 7) % 256;
-				int blue  = (255 - i) % 256;
+				int blue  = (i * 5) % 256;
 				graphics.setColor(new Color(red, green, blue));
 			}
 
@@ -84,10 +84,11 @@ class Huepfer {
 		double x = 0;
 		double y = 0;
 		for(int i = 0; i < num; i++){			// TODO Ihre Implementierung des Hüpfer-Algorithmus ...
-			g.drawLine(transformX(x), transformY(y), transformX(x), transformY(y));
+			graphics.drawLine(transformX(x), transformY(y), transformX(x), transformY(y));
 			double xx = y - Math.signum(x) * Math.sqrt(Math.abs(b * x - c));
 			double yy = a - x;
 			x = xx;
+			y = yy;
 		}
 	}
 }
