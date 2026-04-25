@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 
 public class Lines {
-	private Graphics graphics;
+	private final Graphics graphics;
 
 	/**
 	 * Verschiedene Methoden zum Zeichnen von Linien
@@ -34,7 +34,11 @@ public class Lines {
 	 * @param y1 y-Koordinate Endpunkt
 	 */
 	void drawLineEquation(int x0, int y0, int x1, int y1) {
-		// TODO Hier Code einfuegen ...
+		int m = (y1-y0)/(x1-x0);
+        int b = y0 -m*x0;
+        for(int i = x0; i < x1; i++){
+            y1 = m * i + b;
+        }
 	}
 
 	// Shift geeignet bis Fensterhöhe 8192
@@ -50,8 +54,11 @@ public class Lines {
 	 * @param y1 y-Koordinate Endpunkt
 	 */
 	void drawDda(int x0, int y0, int x1, int y1) {
-		// TODO Hier Code einfuegen ...
-	}
+		int m = ((y1 − y0) · 2b)/(x1 − x0);
+        int b = b * 2;// TODO Hier Code einfuegen ...
+	    int y = (int) (y0 * Math.pow(2,b) +y);
+
+    }
 
 	/**
 	 * Linien-Berechnung über Bresenham
