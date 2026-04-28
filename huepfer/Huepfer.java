@@ -58,7 +58,7 @@ class Huepfer {
 	 * @return GKOS-Koordinate
 	 */
 	int transformX(double x) {
-		return (int) ((x - xMin) * (width-1) / (xMax - xMin));// TODO Hier Code einfuegen ...
+		return (int) ((x - xMin) * (width - 1) / (xMax - xMin));
 	}
 
 	/**
@@ -67,24 +67,21 @@ class Huepfer {
 	 * @param y LKOS-Koordinate
 	 * @return GKOS-Koordinate
 	 */
-	int transformY(double y) {
-		return (int) ((yMax - y) * (height - 1) / (yMax - yMin));// TODO Hier Code einfuegen ...
-	}
 
+	int transformY(double y) {
+		return (int) ((yMax - y) * (height - 1) / (yMax - yMin));
+	}
 	public void render() {
+		double x = 0;
+		double y = 0;
 		for (int i = 0; i < num; i++) {
-			if(i%100 == 0){
+			if (i % 100 == 0) {
 				int red   = (i * 3) % 256;
 				int green = (i * 7) % 256;
 				int blue  = (i * 5) % 256;
 				graphics.setColor(new Color(red, green, blue));
 			}
-
-		}
-		double x = 0;
-		double y = 0;
-		for(int i = 0; i < num; i++){			// TODO Ihre Implementierung des Hüpfer-Algorithmus ...
-			graphics.drawLine(transformX(x), transformY(y), transformX(x), transformY(y));
+			setPixel(transformX(x), transformY(y));
 			double xx = y - Math.signum(x) * Math.sqrt(Math.abs(b * x - c));
 			double yy = a - x;
 			x = xx;

@@ -34,11 +34,11 @@ public class Lines {
 	 * @param y1 y-Koordinate Endpunkt
 	 */
 	void drawLineEquation(int x0, int y0, int x1, int y1) {
-		int m = (y1-y0)/(x1-x0);
-        int b = y0 -m*x0;
-        for(int i = x0; i < x1; i++){
-            y1 = m * i + b;
-        }
+		double m = (double)(y1 - y0) / (x1 - x0);
+		double b = y0 - m * x0;
+		for (int i = x0; i <= x1; i++) {
+			setPixel(i, (int)(m * i + b));
+		}
 	}
 
 	// Shift geeignet bis Fensterhöhe 8192
@@ -54,9 +54,13 @@ public class Lines {
 	 * @param y1 y-Koordinate Endpunkt
 	 */
 	void drawDda(int x0, int y0, int x1, int y1) {
-		int m = ((y1 − y0) · 2b)/(x1 − x0);
-        int b = b * 2;// TODO Hier Code einfuegen ...
-	    int y = (int) (y0 * Math.pow(2,b) +y);
+		int m = ((y1 - y0) << SHIFT) / (x1 - x0);
+        int y = (y0 << SHIFT) + GAMMA;
+
+		for(int x = x0; x <= x1; x++){
+			setPixel(x, y >> SHIFT);
+			y += m;
+		}
 
     }
 
@@ -69,6 +73,26 @@ public class Lines {
 	 * @param y1 y-Koordinate Endpunkt
 	 */
 	void drawBresenham(int x0, int y0, int x1, int y1) {
-		// TODO Hier Code einfuegen ...
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int D = 2 * (dy - dx);   // Abweichung: 2(dy-dx) statt 2dy-dx
+		int deltaE  = 2 * dy;
+		int deltaNE = 2 * (dy - dx);
+
+		int x = x0;
+		int y = y0;
+		setPixel(x, y);
+
+		while (x < x1) {
+			if (D < 0) {
+				D += deltaE;
+			} else {
+				D += deltaNE;
+				y++;
+			}
+			x++;
+			setPixel(x, y);
+		}
 	}
-}
+	}
+
